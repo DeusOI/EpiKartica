@@ -19,6 +19,7 @@
             text-align: center;
             margin: 0 0;
             color: #333;
+            font-weight: bolder;
         }
 
         h4 {
@@ -101,6 +102,8 @@
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
+            overflow-x: auto;
+            /* Allow horizontal scrolling */
         }
 
         input {
@@ -112,6 +115,7 @@
             padding: 12px;
             text-align: center;
             border: 1px solid #ddd;
+            font-size: 0.9rem;
         }
 
         th {
@@ -125,9 +129,27 @@
             color: #333;
         }
 
-        @media screen and (min-width: 768px) {
+        @media screen and (max-width: 768px) {
+            table {
+                width: 100%;
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+                /* Prevent text from wrapping */
+            }
+
             h1 {
                 font-size: 2rem;
+            }
+
+            th,
+            td {
+                padding: 10px;
+                font-size: 0.8rem;
+            }
+
+            .response {
+                font-size: 1rem;
             }
 
             form {
@@ -148,10 +170,10 @@
 <body>
     <img src="epi-logo.png" alt="">
     <h1>EPICENTAR</h1>
-    <h4>PRESMETKA ZA KARTICA</h4>
+    <h4>ПРЕСМЕТКА НА КАРТИЦА</h4>
     <form id="mixForm">
-        <input type="number" id="value" placeholder="Enter value (e.g., 10000)" required />
-        <button type="submit">Presmetaj</button>
+        <input type="number" id="value" placeholder="Внеси вредност (пр. 10000)" required />
+        <button type="submit">Пресметај</button>
     </form>
     <div class="response" id="response"></div>
 
@@ -164,7 +186,7 @@
             const value = document.getElementById('value').value;
 
             if (value <= 0 || isNaN(value)) {
-                responseDiv.innerHTML = `<p class="error">Vnesi pozitiven broj.</p>`;
+                responseDiv.innerHTML = `<p class="error">Внеси позитивен број.</p>`;
                 return;
             }
 
@@ -186,6 +208,7 @@
                             <tr>
                                 <td>${index + 1}</td>
                                 <td>${product.name}</td>
+                                <td>${product.shifra}</td>
                                 <td>${product.price} ден</td>
                             </tr>
                         `;
@@ -196,9 +219,10 @@
     <table>
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Quantity</th>
-                <th>Price</th>
+                <th>Име</th>
+                <th>Шифра</br>(Провери PC)</th>
+                <th>Количина</th>
+                <th>Цена</th>
             </tr>
         </thead>
         <tbody>
@@ -207,6 +231,7 @@
                                 product => `
                 <tr>
                     <td>${product.name}</td>
+                    <td>${product.shifra}</td>
                     <td>${product.count}</td>
                     <td>${product.price} ден</td>
                 </tr>
